@@ -1,0 +1,30 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "view-user-profile-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/viewUserProfile/ViewUserProfileWebPart.js",
+          "manifest": "./src/webparts/viewUserProfile/ViewUserProfileWebPart.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {
+    "jquery": {
+    "path": "https://code.jquery.com/jquery-3.3.1.min.js",
+    "globalName": "$"
+    },
+    
+    "bootstrap": {
+    "path": "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js",
+    "globalName": "$",
+    "globalDependencies": ["jquery"]
+    }
+  
+  },
+  "localizedResources": {
+    "ViewUserProfileWebPartStrings": "lib/webparts/viewUserProfile/loc/{locale}.js"
+  }
+}
