@@ -2,6 +2,8 @@
 
 .team {
     background: #eee !important;
+    max-height: 500px;
+    overflow-y: scroll;
 }
 
 .btn-primary:hover,
@@ -72,6 +74,7 @@ section .section-title {
     -ms-transform: rotateY(0deg);
     z-index: 2;
     margin-bottom: 30px;
+    cursor: pointer;
 }
 
 .backside {
