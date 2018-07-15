@@ -8,7 +8,12 @@ export class  UserObjectType  {
   Email:string;
   office:string;
   UserName:string;
-  ProfileUrl:string;
+  ProfileUrl:ProfileUrl;
   FullName:string;
   Workphone:string;
+}
+
+export class ProfileUrl {
+  LinkUrl:string;
+  DetailsUrl:string;
 }

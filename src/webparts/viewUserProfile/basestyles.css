@@ -29,10 +29,7 @@ section .section-title {
     text-transform: uppercase;
 }
 
-.team .card {
-    border: none;
-    background: #ffffff;
-}
+
 .team .card a {
   text-decoration: none;
 }
@@ -118,7 +115,6 @@ section .section-title {
 }
 
 .backside .card a {
-    font-size: 18px;
     /* color: #348ece !important; */
     text-decoration: none;
 }
@@ -137,24 +133,146 @@ section .section-title {
     height: 90px;
     border-radius: 50%;
 }
-.well .list-group {
-    margin-bottom: 0px;
+
+.front .flipme,.back .flipme{
+    text-align: center;
+    display: block;
 }
-.list-group-item{
-padding: 3px;
-font-size: 11px;
-border: none;
+
+.event-list {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
 }
-.list-group-item .fa{
-padding:3px 8px;
+.event-list > li  {
+    background-color: transparent;
+    padding: 0px;
+    margin: 0px 0px 0px;
+    border-top: 0.5px solid gainsboro;
 }
-.front .flipme{
-    position: absolute;
-    right: 9px;
-    bottom: 6px
+.event-list > li:first-child {
+    border-top:none;
 }
-.back .flipme{
-    position: absolute;
-    left: 9px;
-    bottom: 6px
+.event-list > li:last-child {
+    border-bottom: 0.5px solid gainsboro;
+}
+.event-list > li > img {
+    width: 100%;
+}
+.event-list > li > i.icon{
+    margin-top: 5px;
+    float: left;
+    padding: 3px;
+}
+.event-list > li > .info {
+    padding-top: 5px;
+    text-align: center;
+}
+.event-list > li > .info > .title {
+    font-size: 10pt;
+    font-weight: 700;
+    margin: 0px;
+    text-align: left;
+}
+.event-list > li > .info > .desc {
+    font-size: 9pt;
+    font-weight: 300;
+    margin: 0px;
+    text-align: left;
+}
+.event-list > li > .info > ul,
+.event-list > li > .social > ul {
+    display: table;
+    list-style: none;
+    margin: 10px 0px 0px;
+    padding: 0px;
+    width: 100%;
+    text-align: center;
+}
+.event-list > li > .social > ul {
+    margin: 0px;
+}
+.event-list > li > .info > ul > li,
+.event-list > li > .social > ul > li {
+    display: table-cell;
+    cursor: pointer;
+    color: rgb(30, 30, 30);
+    font-size: 11pt;
+    font-weight: 300;
+    padding: 3px 0px;
+}
+.event-list > li > .info > ul > li > a {
+    display: block;
+    width: 100%;
+    color: rgb(30, 30, 30);
+    text-decoration: none;
+} 
+.event-list > li > .social > ul > li {    
+    padding: 0px;
+}
+.event-list > li > .social > ul > li > a {
+    padding: 3px 0px;
+} 
+.event-list > li > .info > ul > li:hover,
+.event-list > li > .social > ul > li:hover {
+    color: rgb(30, 30, 30);
+    background-color: rgb(200, 200, 200);
+}
+.nopadding {
+    padding: 0 !important;
+    margin: 0 !important;
+ }
+
+@media (min-width: 768px) {
+    .event-list > li {
+        position: relative;
+        display: block;
+        width: 100%;
+        padding:0px 6px;
+    min-height: 35px;
+    }
+    
+    .event-list > li > .info {
+        background-color: transparent;
+        overflow: hidden;
+    }
+    .event-list > li > time,
+    .event-list > li > img {
+        width: 10px;
+        height: 10px;
+        padding: 0px;
+        margin: 0px;
+    }
+    .event-list > li > .info {
+        position: relative;
+        text-align: left;
+    }	
+    .event-list > li > .info > .title, 
+    .event-list > li > .info > .desc {
+        padding: 0px 10px;
+    }
+    .event-list > li > .info > ul {
+        position: absolute;
+        left: 0px;
+        bottom: 0px;
+    }
+    .event-list > li > .social {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        display: block;
+        width: 40px;
+    }
+    .event-list > li > .social > ul {
+        border-left: 1px solid rgb(230, 230, 230);
+    }
+    .event-list > li > .social > ul > li {			
+        display: block;
+        padding: 0px;
+    }
+    .event-list > li > .social > ul > li > a {
+        display: block;
+        width: 40px;
+        padding: 10px 0px 9px;
+    }
 }
