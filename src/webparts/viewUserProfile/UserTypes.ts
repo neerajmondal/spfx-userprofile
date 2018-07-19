@@ -1,19 +1,19 @@
 export class  UserObjectType  {
-  UserID: string;
-  Name: string;
-  ImageUrl:string;
-  DelveImageUrl:string;
-  Department:string;
-  JobTitle:string;
-  Email:string;
-  office:string;
-  UserName:string;
-  ProfileUrl:ProfileUrl;
-  FullName:string;
-  Workphone:string;
+  public UserID: string;
+  public Name: string;
+  public ImageUrl:string;
+  public DelveImageUrl:string;
+  public Department:string;
+  public JobTitle:string;
+  public Email:string;
+  public office:string;
+  public UserName:string;
+  public ProfileUrl:ProfileUrl;
+  public FullName:string;
+  public Workphone:string;
 }
 
 export class ProfileUrl {
-  LinkUrl:string;
-  DetailsUrl:string;
+  public LinkUrl:string;
+  public DetailsUrl:string;
 }

@@ -40,7 +40,7 @@ export default class ViewUserProfileWebPart extends BaseClientSideWebPart<IViewU
   private loadIndicator : boolean = true;
   private siteColUrl:string;
 
-  public usrObj:UserObjectType
+  public usrObj:UserObjectType;
 
   constructor()
   {
@@ -144,12 +144,12 @@ this.xhrCallforData(url);
     method: "GET",
     headers: { "Accept": "application/json; odata=verbose","Content-Type": "application/json"},
                /* "X-RequestDigest": getRequestVal(webUrl)}, */
-    success: function (result) {
+    success:  (result)=> {
         $("#row-container").empty();
 
         let listDocument=result.d.results;
        //console.log(result.d.results);
-        $.each(listDocument,function(index,item){
+        $.each(listDocument,(index,item)=>{
             let usrObj=new UserObjectType();
             usrObj.DelveImageUrl="https://eur.delve.office.com/mt/v3/people/profileimage?userId="+encodeURIComponent(item.UserName)+"&size=L";
             if(item.Picture!=null){
@@ -172,7 +172,7 @@ this.xhrCallforData(url);
             usrObj.ProfileUrl={LinkUrl:
             "https://sandefjord365-my.sharepoint.com/PersonImmersive.aspx?accountname="+ encodeURIComponent(usrObj.UserID).replace(/%20/g,'+'),
         DetailsUrl:"/_api/SP.UserProfiles.PeopleManager/GetPropertiesFor(accountName=@v)?@v='"+encodeURIComponent(usrObj.UserID).replace(/%20/g,'+')+"'"
-        }
+        };
             usrObj.UserName=item.UserName;
 
             userArr.push(usrObj);
@@ -185,7 +185,7 @@ this.xhrCallforData(url);
                        
                             <div class="card-body text-center">`;
             let $pic= `<p><img class=" img-fluid" src="${usrObj.ImageUrl}" alt="card image"></p>`;  
-            let $FullName=`<a href="${usrObj.ProfileUrl.LinkUrl}" target="_blank" ><h6 class="card-title" >${usrObj.FullName}</h6></a>`;
+            let $FullName=`<a href="${usrObj.ProfileUrl.LinkUrl}" target="_blank" ><h5 class="card-title" >${usrObj.FullName}</h5></a>`;
             let  $email=` <div class="card-text"><i class="fa fa-envelope"></i><span>${usrObj.Email}</span></div><div class="front"> <a href="#" class="flipme"><i class="fa fa-arrow-circle-right fa-2x"></i> </a></div>
             </div>
            
@@ -194,10 +194,10 @@ this.xhrCallforData(url);
             let $BackStart=` <div class="backside">
             <div class="card">
             
-                <div class="card-body text-center  mt-4">`;
+                <div class="card-body text-center ">`;
                 let $Title=` <div class='${styles["card-links"]}'>
                     <a class="social-icon text-xs-center" target="_blank" href="${usrObj.ProfileUrl.LinkUrl}">
-                        <i class="fa fa-windows" ></i>
+                    <img src='${imgDelveIcon}' alt='' style="width:30px" />
                     </a>
                </div><h5 class="card-title">${usrObj.FullName}</h5>`   ; 
                 let $props=`<div class="well text-left">
@@ -250,8 +250,8 @@ $("#row-container").append($usrHtml)  ;
             method: "GET",
             headers: { "Accept": "application/json; odata=verbose","Content-Type": "application/json"},
                     /* "X-RequestDigest": getRequestVal(webUrl)}, */
-            success: function (result) {
-                let resultJson=result.d;
+            success:  (data) =>{
+                let resultJson=data.d;
                 let profileCard:string,profileDetails:string;
                 let  userDetails:any={};
 
@@ -269,7 +269,7 @@ $("#row-container").append($usrHtml)  ;
                 userDetails.WorkPhone={Title: "Work Phone" , Value:resultJson.UserProfileProperties.results.find(x => x.Key === 'WorkPhone').Value};
                 userDetails.Department={Title: "Department" , Value:resultJson.UserProfileProperties.results.find(x => x.Key === 'Department').Value};
                 userDetails.AboutMe={Title: "About Me" , Value:resultJson.UserProfileProperties.results.find(x => x.Key === 'AboutMe').Value};
-                userDetails.JobTitle={Title: "Job Title" , Value:resultJson.UserProfileProperties.results.find(x => x.Key === 'SPS-JobTitle').Value}
+                userDetails.JobTitle={Title: "Job Title" , Value:resultJson.UserProfileProperties.results.find(x => x.Key === 'SPS-JobTitle').Value};
                 userDetails.PictureUrl={Title: "Profile Picture Url" , Value:resultJson.UserProfileProperties.results.find(x => x.Key === 'PictureURL').Value};
                 userDetails.Office={Title: "Office" , Value:resultJson.UserProfileProperties.results.find(x => x.Key === 'Office').Value};
                 userDetails.Location={Title: "Location" , Value:resultJson.UserProfileProperties.results.find(x => x.Key === 'SPS-Location').Value};
@@ -387,7 +387,7 @@ $("#row-container").append($usrHtml)  ;
 
             },
         
-            error: function (data) {
+            error: (data)=> {
             console.log(data);
             }
         });
@@ -402,9 +402,9 @@ $("#row-container").append($usrHtml)  ;
 
  
     },
-    error: function (data) {
-       console.log(data);
-    }
+    error: (data) =>{
+       console.log(data)}
+    
 
     
 });

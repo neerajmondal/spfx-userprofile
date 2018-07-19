@@ -81,6 +81,7 @@ section .section-title {
     position: absolute;
     top: 0;
     left: 0;
+    width:100%;
     background: white;
     -webkit-transform: rotateY(-180deg);
     -moz-transform: rotateY(-180deg);
@@ -135,6 +136,11 @@ section .section-title {
     width: 90px;
     height: 90px;
     border-radius: 50%;
+}
+
+.card .card-body{
+padding: 0.25rem;
+margin-top: 6px;
 }
 
 .front .flipme,.back .flipme{
