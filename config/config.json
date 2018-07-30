@@ -16,7 +16,11 @@
     "path": "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js",
     "globalName": "$"
     }
-   
+    ,"bootpag":{
+      "path":"https://cdnjs.cloudflare.com/ajax/libs/bootpag/1.0.7/jquery.bootpag.min.js",
+      "globalName": "$",
+      "globalDependencies": ["jquery"]
+    }
    
   
   },

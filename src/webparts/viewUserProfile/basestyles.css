@@ -1,9 +1,12 @@
 /* FontAwesome for working BootSnippet :> */
-
 .team {
-    background: #eee !important;
-    max-height: 500px;
-    overflow-y: scroll;
+    background-color: transparent;
+
+}
+
+.team [class*='col-'] {
+    padding-right:8px;
+    padding-left:8px;
 }
 
 .btn-primary:hover,
@@ -20,9 +23,7 @@
     border-color: #348ece;
 }
 
-section {
-    padding: 60px 0;
-}
+
 
 section .section-title {
     text-align: center;
@@ -116,17 +117,29 @@ section .section-title {
 .backside .card {
     min-height: 220px;
     max-height:260px;
+    border-radius: .28571429rem;
+    box-shadow: 1px 2px 3px 0 #b2b2b3, 0 0px 1px 1px #cecece;
 }
-
+.frontside .card a,
 .backside .card a {
-    /* color: #348ece !important; */
+     color: #0078d7 !important; 
     text-decoration: none;
 }
-
-/* .frontside .card .card-title,
-.backside .card .card-title {
-    color: #348ece !important;
+.hide-txt{
+    white-space: nowrap;
+    width: 81%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    position: relative;
+    line-height: 12px;
+    display: inline-block;
 }
+.min-height-48{min-height: 48px!important;}
+ .frontside .card .card-title,
+.backside .card .card-title {
+    color: #0078d7 !important;
+}
+/*
 .frontside .card .card-text,
 .backside .card .card-text {
     color: #348ece !important;
@@ -155,9 +168,11 @@ margin-top: 6px;
 }
 .event-list > li  {
     background-color: transparent;
-    padding: 0px;
     margin: 0px 0px 0px;
     border-top: 0.5px solid gainsboro;
+    width: 100%;
+    padding:0px 6px;
+    min-height: 32px;
 }
 .event-list > li:first-child {
     border-top:none;
@@ -182,12 +197,14 @@ margin-top: 6px;
     font-weight: 700;
     margin: 0px;
     text-align: left;
+
 }
 .event-list > li > .info > .desc {
     font-size: 9pt;
     font-weight: 300;
     margin: 0px;
     text-align: left;
+    padding: 0px 6px;
 }
 .event-list > li > .info > ul,
 .event-list > li > .social > ul {
@@ -231,6 +248,56 @@ margin-top: 6px;
     padding: 0 !important;
     margin: 0 !important;
  }
+ .pagination {
+    display: inline-block;
+    padding: 0 0 0 20px; 
+    margin: 0; 
+    list-style: none;
+    border-radius: 4px;
+	}
+	.pagination > li {
+    display: inline;
+    padding: 0;
+    margin: 0;
+}
+.pagination > li:first-child > a, .pagination > li:first-child > span {
+    margin-left: 0;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+.pagination > li:last-child > a, .pagination > li:last-child > span {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+.pagination > li > a, .pagination > li > span {
+    position: relative;
+    float: left;
+    padding: 6px 12px;
+    margin-left: -1px;
+    line-height: 1.42857143;
+    color: #337ab7;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #c5c5c5;
+    box-shadow: 0 0 2px 0 #e8e8e8, 0 0 0 1px #eaeaea;
+}
+.pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+    z-index: 2;
+    color: #fff;
+    cursor: default;
+    background-color: #337ab7;
+    border-color: #337ab7;
+}
+
+.pagination > .disabled > span, .pagination > .disabled > span:hover, .pagination > .disabled > span:focus, .pagination > .disabled > a, .pagination > .disabled > a:hover, .pagination > .disabled > a:focus {
+    cursor: not-allowed !important;
+}
+.pagination > .disabled > a, .pagination > .disabled > a:focus, .pagination > .disabled > a:hover, .pagination > .disabled > span, .pagination > .disabled > span:focus, .pagination > .disabled > span:hover {
+    color: #777;
+    cursor: not-allowed;
+    background-color: #fff;
+    border-color: #ddd;
+} 
 
 @media (min-width: 768px) {
     .event-list > li {
@@ -238,7 +305,7 @@ margin-top: 6px;
         display: block;
         width: 100%;
         padding:0px 6px;
-    min-height: 35px;
+        min-height: 32px;
     }
     
     .event-list > li > .info {
@@ -258,7 +325,7 @@ margin-top: 6px;
     }	
     .event-list > li > .info > .title, 
     .event-list > li > .info > .desc {
-        padding: 0px 10px;
+        padding: 0px 6px;
     }
     .event-list > li > .info > ul {
         position: absolute;
@@ -283,5 +350,16 @@ margin-top: 6px;
         display: block;
         width: 40px;
         padding: 10px 0px 9px;
+    }
+}
+@media (max-width: 767px) {
+    
+    .event-list > li > .info {
+        background-color: transparent;
+        overflow: hidden;
+    }
+    .event-list > li > .info > .title, 
+    .event-list > li > .info > .desc {
+        padding: 0px 6px;
     }
 }

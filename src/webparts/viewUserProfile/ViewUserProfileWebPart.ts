@@ -17,6 +17,7 @@ require("popper.js");
 require("bootstrap");
 import * as popper from 'popper.js';
 import * as bootstrap from 'bootstrap';
+require("bootpag"); 
 
 require('mdbootstrap');
 require('./basestyles.css');
@@ -29,6 +30,8 @@ let userArr= Array< UserObjectType>();
 export interface IViewUserProfileWebPartProps {
   description: string;
   Department:string;
+  noOfItemPerPage:number;
+  
 }
 export {UserObjectType} from './UserTypes';
 
@@ -65,15 +68,15 @@ export default class ViewUserProfileWebPart extends BaseClientSideWebPart<IViewU
 
     if (!this.renderedOnce) {
     this.domElement.innerHTML = `
-    <section class="team pb-5">
+    <section class="team pb-2 pt-2">
           <div class="container">
              <!-- <h4 class="section-title"> Department</h4>-->
-             
+                <p class="pagging_top text-right"></p>
                  <div id="row-container" class="row">
 
 
                   </div>
-
+                  <p class="pagging_bottom text-right"></p>
                   <!-- Full Height Modal Right Success Demo-->
 <div  class="modal fade right" id="fluidModalRightSuccessDemo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
     aria-hidden="true" data-backdrop="false">
@@ -152,19 +155,32 @@ this.xhrCallforData(url);
         $.each(listDocument,(index,item)=>{
             let usrObj=new UserObjectType();
             usrObj.DelveImageUrl="https://eur.delve.office.com/mt/v3/people/profileimage?userId="+encodeURIComponent(item.UserName)+"&size=L";
-            if(item.Picture!=null){
-            usrObj.ImageUrl=item.Picture.Url;
-            if(usrObj.ImageUrl.indexOf("MThumb") >=0){
-            usrObj.ImageUrl =usrObj.ImageUrl.replace("MThumb","LThumb");
-            }
-          }
-          else{
-            usrObj.ImageUrl=imgdefaultUser;
-          }
+
+            usrObj.ImageUrl="/_layouts/15/UserPhoto.aspx?size=l&accountname="+item.EMail;
+
+            //if(item.Picture!=null){
+            //usrObj.ImageUrl=item.Picture.Url;
+           
+           // if(usrObj.ImageUrl.indexOf("MThumb") >=0){
+           // usrObj.ImageUrl =usrObj.ImageUrl.replace("MThumb","LThumb");
+            //}
+            //}
+             //else{
+            //usrObj.ImageUrl=imgdefaultUser;
+            // }
             usrObj.FullName=item.FirstName+ " "+ item.LastName;
             usrObj.Name=item.Title;
             usrObj.Department=(item.Department!=null)?item.Department:"";
             usrObj.Email=item.EMail;
+            let largeEmail:string;
+            if(usrObj.Email.substring(0,usrObj.Email.indexOf('@')).length>20)
+            {
+                largeEmail=usrObj.Email.substring(0,17)+ "...";
+            }
+            else{
+                largeEmail=usrObj.Email.substring(0,usrObj.Email.indexOf('@'));
+            }
+
             usrObj.JobTitle=(item.JobTitle!=null)?item.JobTitle:"";
             usrObj.office=(item.Office!=null)?item.Office:"";
             usrObj.UserID=item.Name;
@@ -177,7 +193,7 @@ this.xhrCallforData(url);
 
             userArr.push(usrObj);
 
-            let $html=`<div class="col-xs-12 col-sm-6 col-md-4">
+            let $html=`<div class="col-xs-12 col-sm-6 col-md-4 page-item">
             <div class="image-flip" ontouchstart="this.classList.toggle('hover');">
                 <div class="mainflip">
                     <div class="frontside">
@@ -185,8 +201,8 @@ this.xhrCallforData(url);
                        
                             <div class="card-body text-center">`;
             let $pic= `<p><img class=" img-fluid" src="${usrObj.ImageUrl}" alt="card image"></p>`;  
-            let $FullName=`<a href="${usrObj.ProfileUrl.LinkUrl}" target="_blank" ><h5 class="card-title" >${usrObj.FullName}</h5></a>`;
-            let  $email=` <div class="card-text"><i class="fa fa-envelope"></i><span>${usrObj.Email}</span></div><div class="front"> <a href="#" class="flipme"><i class="fa fa-arrow-circle-right fa-2x"></i> </a></div>
+            let $FullName=`<div class="min-height-48"><a href="${usrObj.ProfileUrl.LinkUrl}" target="_blank" ><h5 class="card-title mb-0" >${usrObj.FullName}</h5></a></div>`;
+            let  $email=` <div class="card-text"><a href="mailto:${usrObj.Email}"><i class="fa fa-envelope mr-1"></i>${largeEmail}</a></div><div class="front"> <a href="#" class="flipme"><i class="fa fa-arrow-circle-right fa-2x"></i> </a></div>
             </div>
            
             </div>
@@ -199,7 +215,7 @@ this.xhrCallforData(url);
                     <a class="social-icon text-xs-center" target="_blank" href="${usrObj.ProfileUrl.LinkUrl}">
                     <img src='${imgDelveIcon}' alt='' style="width:30px" />
                     </a>
-               </div><h5 class="card-title">${usrObj.FullName}</h5>`   ; 
+               </div><div class="min-height-48"><h5 class="card-title mb-0">${usrObj.FullName}</h5></div>`   ; 
                 let $props=`<div class="well text-left">
                 <ul class="event-list">
                      <li  data-toggle="tooltip" data-animation="false" title="office" >
@@ -226,7 +242,7 @@ this.xhrCallforData(url);
                      <p class="desc">${usrObj.Department}</p>
                  </div>
                  
-             </li></ul></div><p class="back"><a href="#" class="flipme"><i class="fa fa-arrow-circle-left fa-2x"> </i></a></p>` ; 
+             </li></ul></div><p class="back mb-0"><a href="#" class="flipme"><i class="fa fa-arrow-circle-left fa-2x"> </i></a></p>` ; 
                
                 let delveLink=`</div>
             </div> 
@@ -237,6 +253,38 @@ this.xhrCallforData(url);
 let $usrHtml=$html+$pic+$FullName+$email+ $BackStart+$Title+$props+delveLink;
 $("#row-container").append($usrHtml)  ;
 
+//Pagination 
+
+    $('#row-container').find("div.page-item:lt("+(this.properties.noOfItemPerPage-1)+")").show();
+    $('#row-container').find("div.page-item:gt("+(this.properties.noOfItemPerPage-1)+")").hide();
+	   
+	(<any>$('.pagging_top,.pagging_bottom')).bootpag({
+    total:  Math.ceil( $('#row-container').find("div.page-item").length /this.properties.noOfItemPerPage),
+    page: 1,
+    maxVisible: 2,
+    leaps: true,
+    
+    wrapClass: 'pagination',
+    activeClass: 'active',
+    disabledClass: 'disabled',
+    nextClass: 'next',
+    prevClass: 'prev',
+    lastClass: 'last',
+    firstClass: 'first',
+	next:'&#10095;',
+    prev:'&#10094;',
+    href:'#'
+}).on("page", (event, num)=>{
+    event.preventDefault();
+	var lowerLimit = this.properties.noOfItemPerPage * (num - 1);
+    var upperLimit = (num * this.properties.noOfItemPerPage) - 1;
+
+               $('#row-container').find("div.page-item:lt(" + lowerLimit + ")").hide();
+               $('#row-container').find("div.page-item:gt(" + upperLimit + ")").hide();
+               $('#row-container').find('div.page-item').slice(lowerLimit, upperLimit + 1).show();
+}); 
+
+//pagination
  });
 
     $('img.img-fluid').on('error',function(){
@@ -255,7 +303,7 @@ $("#row-container").append($usrHtml)  ;
                 let profileCard:string,profileDetails:string;
                 let  userDetails:any={};
 
-                if(result.d.hasOwnProperty('GetPropertiesFor')){
+                if(resultJson.hasOwnProperty('GetPropertiesFor')){
                     userDetails.PictureUrl={Title: "Profile Picture Url" , Value:imgdefaultUser};
                     userDetails.DisplayName={ Title: "Name" , Value: userArr[index].FullName};
                     userDetails.Email={Title: "Email" ,  Value: userArr[index].Email};
@@ -289,22 +337,22 @@ $("#row-container").append($usrHtml)  ;
                  profileCard=`<div class='card ${styles["card-profile"]} text-center'>
                 <img alt='' class='${styles["card-img-top"]}' src='/SiteAssets/Hval_2.jpg'>
                 <div class='card-block'>
-                  <img alt='' class='${styles["card-img-profile"]}' src='${userDetails.PictureUrl.Value}'>
+                  <img alt='' class='${styles["card-img-profile"]} modal-img-profile' src='${userArr[index].ImageUrl}' />
                   <h4 class='${styles["card-title"]}'>
                     ${userArr[index].Name}
                    ` ;
 
 
-                   if(result.d.hasOwnProperty('GetPropertiesFor')){
+                   if(resultJson.hasOwnProperty('GetPropertiesFor')){
                     profileDetails=` 
-                    <small><i class="fa fa-envelope"></i>${userArr[index].Email}</small>
+                    <small><a href="mailto:${userArr[index].Email}" ><i class="fa fa-envelope mr-1"></i>${userArr[index].Email}</a></small>
                   </h4><ul class="event-list">
 					<li>
 						
 						<i class="fa fa-wpexplorer icon" > </i>
 						<div class="info">
 							<h4 class="title">Information not Available</h4>
-							<p class="desc"></p>
+							<p class="desc">&nbsp;</p>
 						</div>
 						
                     </li></ul> </div>
@@ -314,7 +362,7 @@ $("#row-container").append($usrHtml)  ;
                   else{
 
                     profileDetails =`<small>${userDetails.AboutMe.Value}</small>
-                    <small><i class="fa fa-envelope"></i>${userArr[index].Email}</small>
+                    <small><a href="mailto:${userArr[index].Email}" ><i class="fa fa-envelope mr-1"></i>${userArr[index].Email} </a></small>
                   </h4><ul class="event-list">
                      <li>
                          
@@ -372,7 +420,7 @@ $("#row-container").append($usrHtml)  ;
                  </li>
                      </ul>
                    <div class='${styles["card-links"]}'>
-                     <a  href='${userDetails.DelveProfile}'  target="_blank"><img src='${imgDelveIcon}' alt='' style="width:50px" /></a>
+                     <a  href='${userDetails.DelveProfile}'  target="_blank"><img  src='${imgDelveIcon}' alt='' style="width:50px" /></a>
                     
                    </div>
                  </div>
@@ -382,9 +430,11 @@ $("#row-container").append($usrHtml)  ;
 
               $('#fluidModalRightSuccessDemo .modal-header> .heading').html( userArr[index].FullName );
               $('#fluidModalRightSuccessDemo .modal-body > div.text-center').html(profileCard+ profileDetails);
-
+            //   $('img.modal-img-profile').on('error',function(){
+            //     $(this).attr('src', imgdefaultUser);
+            //     });
                $('#fluidModalRightSuccessDemo').modal('show'); 
-
+              
             },
         
             error: (data)=> {
@@ -443,6 +493,10 @@ $("#row-container").append($usrHtml)  ;
                 
               PropertyPaneTextField('Department', {
                 label: "Departments",
+                value:''
+              }),
+              PropertyPaneTextField('noOfItemPerPage', {
+                label: "Item Per Page",
                 value:''
               })
               ]
