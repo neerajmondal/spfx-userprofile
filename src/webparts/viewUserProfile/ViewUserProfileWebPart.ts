@@ -199,10 +199,10 @@ this.xhrCallforData(url);
                     <div class="frontside">
                         <div class="card" data-index=${index} data-detailurl="${ usrObj.ProfileUrl.DetailsUrl}">
                        
-                            <div class="card-body text-center">`;
+                            <div class="card-body text-center flex-fill">`;
             let $pic= `<p><img class=" img-fluid" src="${usrObj.ImageUrl}" alt="card image"></p>`;  
             let $FullName=`<div class="min-height-48"><a href="${usrObj.ProfileUrl.LinkUrl}" target="_blank" ><h5 class="card-title mb-0" >${usrObj.FullName}</h5></a></div>`;
-            let  $email=` <div class="card-text"><a href="mailto:${usrObj.Email}"><i class="fa fa-envelope mr-1"></i>${largeEmail}</a></div><div class="front"> <a href="#" class="flipme"><i class="fa fa-arrow-circle-right fa-2x"></i> </a></div>
+            let  $email=` <div class="card-text"><a href="mailto:${usrObj.Email}"><div><i class="fa fa-envelope mr-1"></i></div>${largeEmail}</a></div><div class="front"> <a href="#" class="flipme"><i class="fa fa-arrow-circle-right fa-2x"></i> </a></div>
             </div>
            
             </div>
@@ -222,7 +222,7 @@ this.xhrCallforData(url);
                          
                          <i class="fa fa-building  icon" > </i>
                          <div class="info">
-                             <p class="desc">${usrObj.office}</p>
+                             <p class="desc" data-toggle="tooltip" data-animation="false" title="${usrObj.office}">${usrObj.office}</p>
                          </div>
                          
                      </li>
@@ -230,7 +230,7 @@ this.xhrCallforData(url);
                          
                      <i class="fa fa-id-badge  icon" > </i>
                      <div class="info">
-                         <p class="desc">${usrObj.JobTitle}</p>
+                         <p class="desc" data-toggle="tooltip" data-animation="false" title="${usrObj.JobTitle}">${usrObj.JobTitle}</p>
                      </div>
                      
                  </li>
@@ -238,11 +238,11 @@ this.xhrCallforData(url);
                  <li  data-toggle="tooltip" data-animation="false" title="Department" >
                      
                  <i class="fa fa-users icon" > </i>
-                 <div class="info">
-                     <p class="desc">${usrObj.Department}</p>
+                 <div class="info" >
+                     <p class="desc" data-toggle="tooltip" data-animation="false" title="${usrObj.Department}">${usrObj.Department}</p>
                  </div>
                  
-             </li></ul></div><p class="back mb-0"><a href="#" class="flipme"><i class="fa fa-arrow-circle-left fa-2x"> </i></a></p>` ; 
+             </li></ul></div><div class="back mb-0"><a href="#" class="flipme"><i class="fa fa-arrow-circle-left fa-2x"> </i></a></div>` ; 
                
                 let delveLink=`</div>
             </div> 
